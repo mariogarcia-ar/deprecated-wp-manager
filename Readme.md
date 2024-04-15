@@ -163,3 +163,51 @@ With multiple installations, each WordPress site is installed and managed separa
 - **Scalability**: Multiple installations can be scaled independently, making it suitable for scenarios where each site has different resource requirements.
 
 It's important to note that the choice between WPMU, multitenancy, and multiple installations depends on your specific requirements, such as the number of sites, level of customization needed, and resource constraints. Consider evaluating these factors before deciding on the best approach for managing your WordPress sites.
+
+
+## wp-cli
+
+Here are some commonly used wp-cli commands, ordered by their frequency of use:
+
+1. `wp plugin list`: Lists all installed plugins.
+2. `wp theme list`: Lists all installed themes.
+3. `wp post list`: Lists all posts.
+4. `wp user list`: Lists all users.
+5. `wp option list`: Lists all options.
+6. `wp menu list`: Lists all menus.
+7. `wp widget list`: Lists all widgets.
+8. `wp media list`: Lists all media files.
+9. `wp rewrite flush`: Flushes the rewrite rules.
+10. `wp cache flush`: Flushes the object cache.
+
+These are just a few examples of commonly used wp-cli commands. You can explore the wp-cli documentation for a comprehensive list of available commands and their usage.
+
+11. **Check Plugin Status**: Use the following wp-cli commands to check the status of plugins on your WordPress site:
+    - `wp plugin status`: Displays the status of all installed plugins, including their name, version, status (active or inactive), and file path.
+    - `wp plugin is-active <plugin>`: Checks if a specific plugin is active. Replace `<plugin>` with the slug or file path of the plugin.
+    - `wp plugin is-installed <plugin>`: Checks if a specific plugin is installed. Replace `<plugin>` with the slug or file path of the plugin.
+    - `wp plugin get <plugin> --field=<field>`: Retrieves specific information about a plugin. Replace `<plugin>` with the slug or file path of the plugin, and `<field>` with the desired field (e.g., `version`, `author`, `description`).
+
+    These commands can help you verify the status of plugins on your WordPress site and gather information about them.
+
+12. **Check Theme Status**: Similarly, you can use the following wp-cli commands to check the status of themes on your WordPress site:
+    - `wp theme status`: Displays the status of all installed themes, including their name, version, status (active or inactive), and file path.
+
+These commands can help you verify the status of plugins and themes on your WordPress site and gather information about them.
+
+
+11. **Backup WordPress Site**: Use the following wp-cli commands to backup your WordPress site:
+    - `wp db export backup.sql`: Export the WordPress database to a backup file named "backup.sql".
+    - `wp media import /path/to/media/files/`: Import media files to your WordPress site from a specified directory.
+    - `wp theme package`: Create a package of your active theme, including all files and settings.
+    - `wp plugin package`: Create a package of your installed plugins, including all files and settings.
+    - `wp export`: Export your WordPress site content, including posts, pages, and settings, to an XML file.
+
+12. **Restore WordPress Site**: Use the following wp-cli commands to restore your WordPress site from a backup:
+    - `wp db import backup.sql`: Import the WordPress database from a backup file named "backup.sql".
+    - `wp media import /path/to/media/files/`: Import media files to your WordPress site from a specified directory.
+    - `wp theme install /path/to/theme/package.zip`: Install a theme from a package file.
+    - `wp plugin install /path/to/plugin/package.zip`: Install a plugin from a package file.
+    - `wp import`: Import your WordPress site content from an XML file.
+
+These commands allow you to backup and restore your WordPress site using wp-cli. Make sure to replace "/path/to/media/files/" and "/path/to/theme/package.zip" with the actual paths to your media files and theme package file, respectively.
