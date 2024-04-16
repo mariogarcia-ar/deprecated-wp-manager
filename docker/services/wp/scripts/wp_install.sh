@@ -56,3 +56,7 @@ wp core install --url="$WP_URL" \
                 --admin_password="$WP_ADMIN_PASS" \
                 --admin_email="$WP_ADMIN_EMAIL" \
                 --allow-root
+
+
+chown -R www-data:www-data "$WP_DIR"
+chmod -R 755 "$WP_DIR"
