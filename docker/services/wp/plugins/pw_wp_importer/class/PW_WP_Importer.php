@@ -102,4 +102,49 @@ class PW_WP_Importer {
     public function importTag($name) {
         return $this->importTaxonomy($name, 'post_tag');
     }
+
+    /**
+     * Import users in bulk from the CSV file.
+     */
+    public function importUserBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $name = $row['name'];
+            $email = $row['email'];
+            $password = $row['password'];
+            $user_id = $this->importUser($name, $email, $password);
+            if (is_wp_error($user_id)) {
+                echo "\n Error: ". $user_id->get_error_message();
+            } else {
+                echo "\n ${name} has been created";
+            }
+        }
+    }
+    
+
+    /**
+     * Import a user.
+     *
+     * @param string $name The name of the user.
+     * @param string $email The email of the user.
+     * @param string $password The password of the user.
+     * @return int The user ID of the imported user.
+     * @throws Exception If there is an error importing the user.
+     */
+    public function importUser($name, $email, $password) {
+        $user_id = username_exists($name);
+        if (!$user_id) {
+            $user_id = email_exists($email);
+        }
+        if ($user_id) {
+            return $user_id;
+        } else {
+            $user_id = wp_create_user($name, $password, $email);
+            if (is_wp_error($user_id)) {
+                throw new Exception($user_id->get_error_message());
+            } else {
+                return $user_id;
+            }
+        }
+    }
 }
