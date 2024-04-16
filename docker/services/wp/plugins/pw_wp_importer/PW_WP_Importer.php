@@ -160,6 +160,26 @@ if (defined('WP_CLI') && WP_CLI) {
             $importer->importPostMetaBulk();
         }
 
+        /**
+         * Import thumbnails from a CSV file.
+         *
+         * ## OPTIONS
+         *
+         * <file>
+         * : The CSV file to import.
+         *
+         * ## EXAMPLES
+         *
+         *     wp pw_importer thumbnail /path/to/file.csv
+         *
+         * @when after_wp_load
+         */
+        public function thumbnail($args, $assoc_args) {
+            $file = $args[0];
+            $importer = new PW_WP_Importer($file);
+            $importer->importThumbnailBulk();
+        }
+
     }
 
     WP_CLI::add_command('pw_importer', 'PW_WP_Importer_Command');

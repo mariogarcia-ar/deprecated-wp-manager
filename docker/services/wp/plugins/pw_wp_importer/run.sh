@@ -26,4 +26,5 @@ docker compose run --rm wp_cmd pw_importer attachment  "./wp-content/plugins/pw_
 # Post
 docker compose run --rm wp_cmd pw_importer post  "./wp-content/plugins/pw_wp_importer/data/post.csv"
 docker compose run --rm wp_cmd pw_importer post_meta  "./wp-content/plugins/pw_wp_importer/data/post_meta.csv"
+docker compose run --rm wp_cmd pw_importer thumbnail  "./wp-content/plugins/pw_wp_importer/data/thumbnail.csv"
 

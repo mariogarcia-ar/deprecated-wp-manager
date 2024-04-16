@@ -297,13 +297,55 @@ class PW_WP_Importer {
         }
     }
     
-    // add single import post_meta function
+    /**
+     * Import post meta.
+     * 
+     * @param int $post_id The post ID.
+     * @param string $meta_key The meta key.
+     * @param string $meta_value The meta value.
+     * @return int The meta ID of the imported meta.
+     */
     public function importPostMeta($post_id, $meta_key, $meta_value) {
         $meta_id = add_post_meta($post_id, $meta_key, $meta_value);
         if (is_wp_error($meta_id)) {
             return $meta_id;
         } else {
             return $meta_id;
+        }
+    }
+
+    /**
+     * Import post thumbnail in bulk from the CSV file.
+     */
+    public function importThumbnailBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $post_id = $row['post_id'];
+            $file_path = $row['file_path'];
+            $res = $this->importThumbnail($post_id, $file_path);
+            if (is_wp_error($res)) {
+                echo "\n Error: setting thumbnail for post ${post_id}";
+            }else{
+                echo "\n ${file_path} has been set as the thumbnail for post ${post_id}";
+            }            
+        }
+    }
+
+
+    /**
+     * Import post thumbnail.
+     * 
+     * @param int $post_id The post ID.
+     * @param string $file_path The path to the file.
+     * @return bool True if the thumbnail is set, false otherwise.
+     */
+    public function importThumbnail($post_id, $file_path) {
+        $attachment_id = $this->importAttachment($file_path, $post_id);
+        if (is_wp_error($attachment_id)) {
+            echo "\n Error: ". $attachment_id->get_error_message();
+        } else {
+            $res = set_post_thumbnail($post_id, $attachment_id);
+            return $res;
         }
     }
 

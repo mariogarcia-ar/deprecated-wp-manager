@@ -1,0 +1,5 @@
+sku,file_path,post_id,alt_text,caption,description
+thumbs1,./wp-content/plugins/pw_wp_importer/data/assets/thumbs1.jpg,1,"thumbs 1 alt text","thumbs 1 caption","thumbs 1 description"
+thumbs2,./wp-content/plugins/pw_wp_importer/data/assets/thumbs2.jpg,11,"thumbs 2 alt text","thumbs 2 caption","thumbs 2 description"
+thumbs3,./wp-content/plugins/pw_wp_importer/data/assets/thumbs3.jpg,103,"thumbs 3 alt text","thumbs 3 caption","thumbs 3 description"
+thumbs4,./wp-content/plugins/pw_wp_importer/data/assets/thumbs4.jpg,104,"thumbs 4 alt text","thumbs 4 caption","thumbs 4 description"
