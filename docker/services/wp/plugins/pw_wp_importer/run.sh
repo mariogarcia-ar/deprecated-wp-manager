@@ -11,9 +11,15 @@ docker compose run --rm wp_cmd plugin delete pw_wp_importer
 docker compose run --rm wp_cmd plugin install /var/www/plugins/pw_wp_importer.zip  --activate
 
 # Test
+
+# Taxonomies, categories and tags
 docker compose run --rm wp_cmd pw_importer category  "./wp-content/plugins/pw_wp_importer/data/category.csv"
 docker compose run --rm wp_cmd pw_importer tag  "./wp-content/plugins/pw_wp_importer/data/tag.csv"
 docker compose run --rm wp_cmd pw_importer taxonomy  "./wp-content/plugins/pw_wp_importer/data/taxonomy.csv" category
 
+# Users
 docker compose run --rm wp_cmd pw_importer user  "./wp-content/plugins/pw_wp_importer/data/user.csv"
+
+# Attachment
+docker compose run --rm wp_cmd pw_importer attachment  "./wp-content/plugins/pw_wp_importer/data/attachment.csv"
 

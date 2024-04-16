@@ -147,4 +147,72 @@ class PW_WP_Importer {
             }
         }
     }
+
+    /**
+     * Import posts in bulk from the CSV file.
+     */
+    public function importAttachmentBulk($post_id=1) {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $file = $row['file_path'];
+            $_post_id = $row['_post_id']? $row['_post_id'] : $post_id;
+            $attachment_id = $this->importAttachment($file, $_post_id);
+            if (is_wp_error($attachment_id)) {
+                echo "\n Error: ". $attachment_id->get_error_message();
+            } else {
+                echo "\n ${file} has been created";
+            }
+        }
+    }
+
+    /**
+     * Import an attachment.
+     *
+     * @param string $file_path The path to the file.
+     * @param int $post_id The post ID to attach the file to.
+     * @return int The attachment ID of the imported attachment.
+     * @throws Exception If there is an error importing the attachment.
+     */
+    function importAttachment ($file_path, $post_id){
+        // Prepare the file for upload
+        $file = array(
+            'name' => basename($file_path),
+            'type' => wp_check_filetype(basename($file_path), null),
+            'tmp_name' => $file_path,
+            'error' => 0,
+            'size' => filesize($file_path)
+        );
+        
+        // Upload the file
+        $overrides = array(
+            'test_form' => false,
+            'test_size' => true,
+        );
+        $file_data = wp_handle_sideload($file, $overrides);
+        
+        if (isset($file_data['error'])) {
+            // Handle the error
+            echo $file_data['error'];
+            return;
+        }
+        
+        // Prepare the attachment for insertion
+        $attachment = array(
+            'guid' => $file_data['url'],
+            'post_mime_type' => $file_data['type'],
+            'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_path)),
+            'post_content' => '',
+            'post_status' => 'inherit'
+        );
+        
+        // Insert the attachment
+        $attach_id = wp_insert_attachment($attachment, $file_data['file'], $post_id);
+        
+        // Include the image.php file for the function wp_generate_attachment_metadata()
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        
+        // Generate the metadata for the attachment and update the database record
+        $attach_data = wp_generate_attachment_metadata($attach_id, $file_data['file']);
+        wp_update_attachment_metadata($attach_id, $attach_data);        
+    }
 }

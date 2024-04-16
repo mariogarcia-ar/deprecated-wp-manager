@@ -98,6 +98,27 @@ if (defined('WP_CLI') && WP_CLI) {
             $importer->importUserBulk();
         }
 
+        // add import attachment using importAttachmentBulk 
+        /**
+         * Import attachments from a CSV file.
+         *
+         * ## OPTIONS
+         *
+         * <file>
+         * : The CSV file to import.
+         *
+         * ## EXAMPLES
+         *
+         *     wp pw_importer attachment /path/to/file.csv
+         *
+         * @when after_wp_load
+         */
+        public function attachment($args, $assoc_args) {
+            $file = $args[0];
+            $importer = new PW_WP_Importer($file);
+            $importer->importAttachmentBulk();
+        }
+
     }
 
     WP_CLI::add_command('pw_importer', 'PW_WP_Importer_Command');
