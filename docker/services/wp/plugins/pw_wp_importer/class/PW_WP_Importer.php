@@ -278,4 +278,35 @@ class PW_WP_Importer {
         }
     }
     
+
+    /**
+     * Import post meta in bulk from the CSV file.
+     */
+    public function importPostMetaBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $post_id = $row['post_id'];
+            $meta_key = $row['meta_key'];
+            $meta_value = $row['meta_value'];
+            $meta_id = $this->importPostMeta($post_id, $meta_key, $meta_value);
+            if (is_wp_error($meta_id)) {
+                echo "\n Error: ". $meta_id->get_error_message();
+            } else {
+                echo "\n ${meta_key} has been created";
+            }
+        }
+    }
+    
+    // add single import post_meta function
+    public function importPostMeta($post_id, $meta_key, $meta_value) {
+        $meta_id = add_post_meta($post_id, $meta_key, $meta_value);
+        if (is_wp_error($meta_id)) {
+            return $meta_id;
+        } else {
+            return $meta_id;
+        }
+    }
+
+
+
 }

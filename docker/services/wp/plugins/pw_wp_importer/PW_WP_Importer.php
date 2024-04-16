@@ -140,6 +140,26 @@ if (defined('WP_CLI') && WP_CLI) {
             $importer->importPostBulk();
         }
 
+        /**
+         * Import post meta from a CSV file.
+         *
+         * ## OPTIONS
+         *
+         * <file>
+         * : The CSV file to import.
+         *
+         * ## EXAMPLES
+         *
+         *     wp pw_importer post_meta /path/to/file.csv
+         *
+         * @when after_wp_load
+         */
+        public function post_meta($args, $assoc_args) {
+            $file = $args[0];
+            $importer = new PW_WP_Importer($file);
+            $importer->importPostMetaBulk();
+        }
+
     }
 
     WP_CLI::add_command('pw_importer', 'PW_WP_Importer_Command');
