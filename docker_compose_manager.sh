@@ -3,7 +3,6 @@
 # chmod +x docker_compose_manager.sh
 BASEDIR=$(dirname "$(realpath "$0")")
 
-
 # Define the path to your docker-compose.yml file
 COMPOSE_FILE="./docker-compose.yml"
 
@@ -24,7 +23,11 @@ install_cert() {
     cp "${NGINX_SERVER_NAME}-key.pem" private-key.pem
 }
 
-# Check the command line argument
+install_wp() {
+    # Your WordPress installation code here
+    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_install.sh
+}
+
 # Check the command line argument
 case $1 in
     up)
@@ -42,7 +45,10 @@ case $1 in
     install-cert)
         install_cert
         ;;
+    install-wp)
+        install_wp
+        ;;
     *)
-        echo "Usage: $0 {up [--build]|down|install-cert}"
+        echo "Usage: $0 {up [--build]|down|install-cert|install-wp}"
         exit 1
 esac
