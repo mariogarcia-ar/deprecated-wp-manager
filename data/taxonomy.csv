@@ -1,0 +1,17 @@
+sku,name,taxonomy
+cat1,Category 1 Data,category
+cat2,Category 2 Data,category
+cat3,Category 3 Data,category
+cat4,Category 4 Data,category
+tag1,Tag 1 Data,post_tag
+tag2,Tag 2 Data,post_tag
+tag3,Tag 3 Data,post_tag
+tag4,Tag 4 Data,post_tag
+cus1,Custom Taxonomy 1 Data,custom_taxonomy
+cus2,Custom Taxonomy 2 Data,custom_taxonomy
+cus3,Custom Taxonomy 3 Data,custom_taxonomy
+cus4,Custom Taxonomy 4 Data,custom_taxonomy
+cat4,Category 4 Data,category
+cat5,Category 5 Data,category
+tag1,Tag 4 Data,post_tag
+tag2,Tag 5 Data,post_tag

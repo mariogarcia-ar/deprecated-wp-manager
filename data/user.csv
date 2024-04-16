@@ -1,0 +1,5 @@
+sku,name,email,password
+usr1,John Doe Data,johndoe_data@example.com,123456
+usr2,Jane Doe Data,janedoe_data@example.com,abcdef
+usr3,Alice Smith Data,alicesmith_data@example.com,654321
+usr4,Bob Johnson Data,bobjohnson_data@example.com,fedcba

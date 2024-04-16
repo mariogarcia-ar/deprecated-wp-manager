@@ -1,0 +1,5 @@
+sku,file_path,post_id,alt_text,caption,description
+attach1,./wp-content/plugins/pw_wp_importer/data/assets/image1.jpg,1,"Image 1 alt text","Image 1 caption","Image 1 description"
+attach2,./wp-content/plugins/pw_wp_importer/data/assets/image2.jpg,102,"Image 2 alt text","Image 2 caption","Image 2 description"
+attach3,./wp-content/plugins/pw_wp_importer/data/assets/image3.jpg,103,"Image 3 alt text","Image 3 caption","Image 3 description"
+attach4,./wp-content/plugins/pw_wp_importer/data/assets/image4.jpg,104,"Image 4 alt text","Image 4 caption","Image 4 description"
