@@ -1,15 +1,19 @@
 #!/bin/bash
-
 # chmod +x docker_compose_manager.sh
 BASEDIR=$(dirname "$(realpath "$0")")
+
+# load the .env file
+source $BASEDIR"/.env" 2>/dev/null
+
+
+# Define the wp_cmd and wp_install commands
+wp_cmd="docker compose -f $BASEDIR/docker-compose.yml run --rm wp_cmd"
+wp_install="docker compose -f $BASEDIR/docker-compose.yml run --rm wp_install"
 
 # Define the path to your docker-compose.yml file
 COMPOSE_FILE="./docker-compose.yml"
 
 install_cert() {
-    # Mute the output of the .env file
-    source $BASEDIR"/.env" 2>/dev/null
-
     cd $BASEDIR"/docker/services/nginx/certs"
 
     rm *.pem
@@ -26,48 +30,51 @@ install_cert() {
 install_wp() {
     cd $BASEDIR
     # Your WordPress installation code here
-    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_install.sh
+    $wp_install /var/www/scripts/wp_install.sh
 }
 
 generate_data_wp() {
     cd $BASEDIR
     # Your WordPress installation code here
-    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_generate_data.sh
+    $wp_install /var/www/scripts/wp_generate_data.sh
 }
 
 reset_db_wp() {
     cd $BASEDIR
     # Your WordPress installation code here
-    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_db_reset.sh
+    $wp_install /var/www/scripts/wp_db_reset.sh
 }
 
+# ./pw_manager.sh import-data "/var/www/data"
 import() {
+    DATA_DIR="/var/www/data" #$1
+    
     cd $BASEDIR"/docker/services/wp/plugins"
     rm pw_wp_importer.zip
     zip -r pw_wp_importer.zip pw_wp_importer
 
     cd $BASEDIR
     #Install 
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd plugin delete pw_wp_importer
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd plugin install /var/www/plugins/pw_wp_importer.zip  --activate
+    $wp_cmd plugin delete pw_wp_importer
+    $wp_cmd plugin install /var/www/plugins/pw_wp_importer.zip  --activate
 
     # Test
 
     # Taxonomies, categories and tags
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer category  "./wp-content/plugins/pw_wp_importer/data/category.csv"
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer tag  "./wp-content/plugins/pw_wp_importer/data/tag.csv"
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer taxonomy  "./wp-content/plugins/pw_wp_importer/data/taxonomy.csv" category
+    $wp_cmd pw_importer category  "${DATA_DIR}/category.csv"
+    $wp_cmd pw_importer tag  "${DATA_DIR}/tag.csv"
+    $wp_cmd pw_importer taxonomy  "${DATA_DIR}/taxonomy.csv" category
 
     # Users
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer user  "./wp-content/plugins/pw_wp_importer/data/user.csv"
+    $wp_cmd pw_importer user  "${DATA_DIR}/user.csv"
 
     # Attachment
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer attachment  "./wp-content/plugins/pw_wp_importer/data/attachment.csv"
+    $wp_cmd pw_importer attachment  "${DATA_DIR}/attachment.csv"
 
     # Post
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer post  "./wp-content/plugins/pw_wp_importer/data/post.csv"
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer post_meta  "./wp-content/plugins/pw_wp_importer/data/post_meta.csv"
-    docker compose -f $COMPOSE_FILE run --rm wp_cmd pw_importer thumbnail  "./wp-content/plugins/pw_wp_importer/data/thumbnail.csv"
+    $wp_cmd pw_importer post  "${DATA_DIR}/post.csv"
+    $wp_cmd pw_importer post_meta  "${DATA_DIR}/post_meta.csv"
+    $wp_cmd pw_importer thumbnail  "${DATA_DIR}/thumbnail.csv"
 
 }
 
@@ -100,9 +107,33 @@ case $1 in
         reset_db_wp
         ;;  
     import-data)
-        import
+            # if [ -z "$2" ]; then
+            #     echo "Usage: $0 import-data <data-dir>"
+            #     exit 1
+            # fi
+            import #$2
         ;;        
     *)
-        echo "Usage: $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data}"
+        echo ""
+        echo "###############################"
+        echo "Usage:" 
+        echo " $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data}"
+
+        echo ""
+        echo "###############################"
+        echo "Basic usage:"
+        echo "  ./pw_manager.sh up --build"
+        echo "  ./pw_manager.sh install-cert"
+        echo "  ./pw_manager.sh install-wp"
+        echo "  ./pw_manager.sh import-data"
+        
+        echo ""
+        echo "###############################"
+        echo "nWordpress:"
+        echo "Visit https://${WP_URL} or admin https://${WP_URL}/wp-admin"
+        echo "user: ${WP_ADMIN_USER}"
+        echo "pass: ${WP_ADMIN_PASS}"
+        
+
         exit 1
 esac

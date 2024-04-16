@@ -70,6 +70,7 @@ services:
     volumes:
       - ./docker/volumes/wordpress:/var/www/html
       - ./docker/services/wp/plugins:/var/www/plugins
+      - ./data:/var/www/data
     depends_on:
       - nginx      
     entrypoint: ['wp', '--allow-root']
