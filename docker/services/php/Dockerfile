@@ -5,4 +5,8 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli 
 
 RUN chown www-data:www-data /var/www/html -R && chmod 755 /var/www/html -R
 
-RUN echo "<?php echo 'My docker LAMP'; " > /var/www/html/index.php
+# Install WP-CLI
+RUN apk add --no-cache curl \
+    && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp
