@@ -33,6 +33,13 @@ generate_data_wp() {
     docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_generate_data.sh
 }
 
+reset_db_wp() {
+    # Your WordPress installation code here
+    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_db_reset.sh
+}
+
+
+
 # Check the command line argument
 case $1 in
     up)
@@ -56,7 +63,10 @@ case $1 in
     generate-data)
         generate_data_wp
         ;;
+    reset-db)
+        reset_db_wp
+        ;;        
     *)
-        echo "Usage: $0 {up [--build]|down|install-cert|install-wp|generate-data}"
+        echo "Usage: $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db}"
         exit 1
 esac
