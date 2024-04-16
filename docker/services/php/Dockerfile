@@ -12,3 +12,6 @@ RUN apk add --no-cache curl \
     && mv wp-cli.phar /usr/local/bin/wp
 
 RUN apk add --no-cache mysql-client    
+
+RUN mkdir -p /var/www/html/wp-content/upgrade
+RUN chown www-data:www-data /var/www/html/wp-content/upgrade -R && chmod 755 /var/www/html/wp-content/upgrade -R
