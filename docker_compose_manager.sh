@@ -28,6 +28,11 @@ install_wp() {
     docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_install.sh
 }
 
+generate_data_wp() {
+    # Your WordPress installation code here
+    docker compose -f $COMPOSE_FILE run --rm wp_install /var/www/scripts/wp_generate_data.sh
+}
+
 # Check the command line argument
 case $1 in
     up)
@@ -48,7 +53,10 @@ case $1 in
     install-wp)
         install_wp
         ;;
+    generate-data)
+        generate_data_wp
+        ;;
     *)
-        echo "Usage: $0 {up [--build]|down|install-cert|install-wp}"
+        echo "Usage: $0 {up [--build]|down|install-cert|install-wp|generate-data}"
         exit 1
 esac
