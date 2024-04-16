@@ -51,3 +51,8 @@ analizar/
 
 docker/volumes/
 docker/services/nginx/certs/
+
+*.zip
+*.tar
+*.gz
+*.log 
