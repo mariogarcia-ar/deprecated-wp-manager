@@ -62,12 +62,14 @@ services:
       - .env
 
   # docker compose run --rm wp_cmd user list
+  # docker compose run --rm wp_cmd plugin install /var/www/plugins/pw_wp_importer.zip  --activate
   wp_cmd:
     build: 
       context: ./docker/services/php/
       dockerfile: Dockerfile
     volumes:
       - ./docker/volumes/wordpress:/var/www/html
+      - ./docker/services/wp/plugins:/var/www/plugins
     depends_on:
       - nginx      
     entrypoint: ['wp', '--allow-root']
