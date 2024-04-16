@@ -1,0 +1,5 @@
+title,content,author,category,tags,post_date,post_status,post_type
+"Hello World","This is your first post. Edit or delete it, then start writing!","John Doe","General","welcome, first post, hello world","2022-01-01 00:00:00","publish","post"
+"My Second Post","This is your second post. Keep going!","Jane Doe","Updates","second post, updates","2022-01-02 00:00:00","publish","post"
+"A Draft Post","This post is still a draft.","John Doe","Drafts","draft, work in progress","2022-01-03 00:00:00","draft","post"
+"Another Post","Here's another post for your blog.","Jane Doe","General","blog, post, general","2022-01-04 00:00:00","publish","post"

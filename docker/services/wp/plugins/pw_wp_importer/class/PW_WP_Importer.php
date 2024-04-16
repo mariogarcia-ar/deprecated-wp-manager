@@ -215,4 +215,67 @@ class PW_WP_Importer {
         $attach_data = wp_generate_attachment_metadata($attach_id, $file_data['file']);
         wp_update_attachment_metadata($attach_id, $attach_data);        
     }
+    
+    /**
+     * Import posts in bulk from the CSV file.
+     */
+    public function importPostBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $title = $row['title'];
+            $content = $row['content'];
+            $author = $row['author'];
+            $category = $row['category'];
+            $tags = $row['tags'];
+            $post_date = $row['post_date'];
+            $post_status = $row['post_status'];
+            $post_type = $row['post_type'];
+            $post_id = $this->importPost($title, $content, $author, $category, $tags, $post_date, $post_status, $post_type);
+            if (is_wp_error($post_id)) {
+                echo "\n Error: ". $post_id->get_error_message();
+            } else {
+                echo "\n ${title} has been created";
+            }
+        }
+    }
+    
+
+    /**
+     * Import a post.
+     *
+     * @param string $title The title of the post.
+     * @param string $content The content of the post.
+     * @param int $author The author ID of the post.
+     * @param int $category The category ID of the post.
+     * @param string $tags The tags of the post.
+     * @param string $post_date The date of the post.
+     * @param string $post_status The status of the post.
+     * @param string $post_type The type of the post.
+     * @return int The post ID of the imported post.
+     * @throws Exception If there is an error importing the post.
+     */
+    public function importPost($title, $content, $author, $category, $tags, $post_date, $post_status, $post_type='post') {
+        $post_id = post_exists($title, $content, $post_date);
+        if ($post_id) {
+            return $post_id;
+        } else {
+            $post_data = array(
+                'post_title' => $title,
+                'post_content' => $content,
+                'post_author' => $author,
+                'post_category' => array($category),
+                'tags_input' => $tags,
+                'post_date' => $post_date,
+                'post_status' => $post_status,
+                'post_type' => $post_type
+            );
+            $post_id = wp_insert_post($post_data);
+            if (is_wp_error($post_id)) {
+                return $post_id;
+            } else {
+                return $post_id;
+            }
+        }
+    }
+    
 }

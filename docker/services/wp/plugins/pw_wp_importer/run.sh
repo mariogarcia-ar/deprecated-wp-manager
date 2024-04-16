@@ -12,14 +12,16 @@ docker compose run --rm wp_cmd plugin install /var/www/plugins/pw_wp_importer.zi
 
 # Test
 
-# Taxonomies, categories and tags
-docker compose run --rm wp_cmd pw_importer category  "./wp-content/plugins/pw_wp_importer/data/category.csv"
-docker compose run --rm wp_cmd pw_importer tag  "./wp-content/plugins/pw_wp_importer/data/tag.csv"
-docker compose run --rm wp_cmd pw_importer taxonomy  "./wp-content/plugins/pw_wp_importer/data/taxonomy.csv" category
+# # Taxonomies, categories and tags
+# docker compose run --rm wp_cmd pw_importer category  "./wp-content/plugins/pw_wp_importer/data/category.csv"
+# docker compose run --rm wp_cmd pw_importer tag  "./wp-content/plugins/pw_wp_importer/data/tag.csv"
+# docker compose run --rm wp_cmd pw_importer taxonomy  "./wp-content/plugins/pw_wp_importer/data/taxonomy.csv" category
 
-# Users
-docker compose run --rm wp_cmd pw_importer user  "./wp-content/plugins/pw_wp_importer/data/user.csv"
+# # Users
+# docker compose run --rm wp_cmd pw_importer user  "./wp-content/plugins/pw_wp_importer/data/user.csv"
 
-# Attachment
-docker compose run --rm wp_cmd pw_importer attachment  "./wp-content/plugins/pw_wp_importer/data/attachment.csv"
+# # Attachment
+# docker compose run --rm wp_cmd pw_importer attachment  "./wp-content/plugins/pw_wp_importer/data/attachment.csv"
 
+# Post
+docker compose run --rm wp_cmd pw_importer post  "./wp-content/plugins/pw_wp_importer/data/post.csv"
