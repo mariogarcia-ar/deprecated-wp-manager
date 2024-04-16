@@ -44,14 +44,15 @@ services:
     #   WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
     #   WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
 
-  # docker compose run --rm wp_install /var/www/wp_install.sh
+  # docker compose run --rm wp_install /var/www/scripts/wp_install.sh
+  # docker compose run --rm wp_install /var/www/scripts/fakerpress.sh
   wp_install:
     build: 
       context: ./docker/services/php/
       dockerfile: Dockerfile
     volumes:
       - ./docker/volumes/wordpress:/var/www/html
-      - ./docker/services/wp/wp_install.sh:/var/www/wp_install.sh
+      - ./docker/services/wp/scripts:/var/www/scripts
     depends_on:
       - nginx      
     entrypoint: ['/bin/ash']       #, '/var/www/wp_install.sh']
