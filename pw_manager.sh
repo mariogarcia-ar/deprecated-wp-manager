@@ -78,7 +78,21 @@ import() {
 
 }
 
+download_backup_prod() {
+    # Connect to the server and download the file
+    sftp -i $SFTP_KEY -P $SFTP_PORT $SFTP_USER@$SFTP_HOST <<EOF
+    get $SFTP_REMOTE_FILE $SFTP_LOCAL_PATH
+    exit
+EOF
 
+    echo "File downloaded to $SFTP_LOCAL_PATH"
+
+    # unzip the file
+    unzip $SFTP_LOCAL_PATH"/backup-prod.zip" -d $SFTP_LOCAL_PATH
+
+    echo "File unzipped to $SFTP_LOCAL_PATH"
+
+}
 
 # Check the command line argument
 case $1 in
@@ -112,12 +126,15 @@ case $1 in
             #     exit 1
             # fi
             import #$2
-        ;;        
+        ;;     
+    download-backup-prod)
+        download_backup_prod
+        ;;     
     *)
         echo ""
         echo "###############################"
         echo "Usage:" 
-        echo " $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data}"
+        echo " $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data|download-backup-prod}"
 
         echo ""
         echo "###############################"
@@ -126,10 +143,13 @@ case $1 in
         echo "  ./pw_manager.sh install-cert"
         echo "  ./pw_manager.sh install-wp"
         echo "  ./pw_manager.sh import-data"
-        
+        echo "" 
+        echo "  ./pw_manager.sh download-backup-prod"
+
+
         echo ""
         echo "###############################"
-        echo "nWordpress:"
+        echo "Wordpress:"
         echo "Visit https://${WP_URL} or admin https://${WP_URL}/wp-admin"
         echo "user: ${WP_ADMIN_USER}"
         echo "pass: ${WP_ADMIN_PASS}"
