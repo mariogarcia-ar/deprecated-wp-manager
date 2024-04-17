@@ -51,4 +51,13 @@ wp_restore_backup() {
 }
 
 
+wp_site_empty() {
+    echo "Emptying site ..."
+    mount_scripts
+    mount_data
 
+    cd $BASEDIR
+    wp_package_plugins
+
+    $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_site_empty.sh"
+}

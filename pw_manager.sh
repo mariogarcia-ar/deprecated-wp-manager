@@ -37,6 +37,9 @@ case $1 in
     wp-import-data)
         wp_import_data $2
         ;;
+    wp-site-empty)
+        wp_site_empty $2
+        ;;
 
     wp-restore-backup)
         wp_restore_backup $2
@@ -62,4 +65,8 @@ case $1 in
         echo "  $0 wp-install"        
         echo "  $0 wp-import-data"        
         echo "  $0 wp-restore-backup"
+        echo "  $0 wp-site-empty"
+        echo "Visit https://${WP_URL} or admin https://${WP_URL}/wp-admin"
+        echo "user: ${WP_ADMIN_USER}"
+        echo "pass: ${WP_ADMIN_PASS}"        
 esac
