@@ -30,6 +30,9 @@ case $1 in
     wp-install)
         wp_install $2
         ;;
+    wp-import-data)
+        wp_import_data $2
+        ;;
     # Help
     *)
         echo "Usage: $0 <ommand>"
@@ -47,4 +50,5 @@ case $1 in
         echo ""
         echo "Wordpress:"
         echo "  $0 wp-install"        
+        echo "  $0 wp-import-data"        
 esac
