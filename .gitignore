@@ -49,10 +49,12 @@ wp-config.php
 
 analizar/
 
-docker/volumes/
+volumes/
 docker/services/nginx/certs/
 
 *.zip
 *.tar
 *.gz
 *.log 
+notes.sh
+borrar/
