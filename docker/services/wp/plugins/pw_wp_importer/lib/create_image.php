@@ -1,14 +1,14 @@
 <?php
 
-create_image($text="1", $name=__DIR__.'/../data/assets/image1.jpg');
-create_image($text="2", $name=__DIR__.'/../data/assets/image2.jpg');
-create_image($text="3", $name=__DIR__.'/../data/assets/image3.jpg');
-create_image($text="4", $name=__DIR__.'/../data/assets/image4.jpg');
+create_image($text="1", $name=__DIR__.'/../var/data/assets/image1.jpg');
+create_image($text="2", $name=__DIR__.'/../var/data/assets/image2.jpg');
+create_image($text="3", $name=__DIR__.'/../var/data/assets/image3.jpg');
+create_image($text="4", $name=__DIR__.'/../var/data/assets/image4.jpg');
 
-create_image($text="1 thumbs", $name=__DIR__.'/../data/assets/thumbs1.jpg');
-create_image($text="2 thumbs", $name=__DIR__.'/../data/assets/thumbs2.jpg');
-create_image($text="3 thumbs", $name=__DIR__.'/../data/assets/thumbs3.jpg');
-create_image($text="4 thumbs", $name=__DIR__.'/../data/assets/thumbs4.jpg');
+create_image($text="1 thumbs", $name=__DIR__.'/../var/data/assets/thumbs1.jpg');
+create_image($text="2 thumbs", $name=__DIR__.'/../var/data/assets/thumbs2.jpg');
+create_image($text="3 thumbs", $name=__DIR__.'/../var/data/assets/thumbs3.jpg');
+create_image($text="4 thumbs", $name=__DIR__.'/../var/data/assets/thumbs4.jpg');
 
 
 function create_image($text, $name){
