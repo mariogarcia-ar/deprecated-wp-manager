@@ -50,12 +50,13 @@ wp-config.php
 analizar/
 
 volumes/
-docker/services/nginx/certs/
+var/docker/services/nginx/certs/
 
 *.zip
 *.tar
 *.gz
 *.log 
+
 notes.sh
 borrar/
 tmp/
