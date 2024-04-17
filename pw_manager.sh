@@ -26,6 +26,10 @@ case $1 in
         lamp_emit_cert
         ;;
 
+    download-backup)
+        lamp_download_backup
+        ;;
+
     # Wordpress
     wp-install)
         wp_install $2
@@ -46,6 +50,7 @@ case $1 in
         echo ""
         echo "Lamp:"
         echo "  $0 emit-cert"    
+        echo "  $0 download-backup"    
         
         echo ""
         echo "Wordpress:"

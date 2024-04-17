@@ -61,3 +61,7 @@ notes.sh
 borrar/
 tmp/
 backup-prod/
+var/docker/services/nginx/certs/dev01.local-key.pem
+var/docker/services/nginx/certs/dev01.local.pem
+var/docker/services/nginx/certs/private-key.pem
+var/docker/services/nginx/certs/public-key.pem
