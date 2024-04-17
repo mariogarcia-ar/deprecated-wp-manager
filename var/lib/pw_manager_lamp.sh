@@ -29,20 +29,23 @@ lamp_emit_cert() {
 lamp_download_backup() {
     echo "Downloading the backup from the remote server ..."
 
-    # check if backup-prod.zip exists
-    if [ -f "$PW_TMP_DIR/backup-prod.zip" ]; then
+    # check if backup-prod.tar.gz exists
+    if [ -f "$PW_TMP_DIR/backup-prod.tar.gz" ]; then
         echo "Backup already exists. Skipping download."
     else
         # Download the backup from the remote server
-        sftp_download_file "$SFTP_REMOTE_FILE" "$PW_TMP_DIR/backup-prod.zip"
+        sftp_download_file "$SFTP_REMOTE_FILE" "$PW_TMP_DIR/backup-prod.tar.gz"
     fi
 
     # Unzip the backup
     cd "$PW_TMP_DIR"
-    unzip -o "$PW_TMP_DIR/backup-prod.zip" #-d "./var/tmp/home/amestienda.com.ar/"
-    echo "Backup downloaded successfully. Files are located in $PW_TMP_DIR/"
+    # unzip -o "$PW_TMP_DIR/backup-prod.tar.gz" #-d "./var/tmp/home/amestienda.com.ar/"
+    sudo mkdir -p $PW_SHARED_DIR"/backup-prod/"
+    sudo tar -xzf "$PW_TMP_DIR/backup-prod.tar.gz" -C $PW_SHARED_DIR"/backup-prod/"
 
-    sudo mkdir -p $PW_SHARED_DIR"/backup-prod/" #2>/dev/null
-    sudo cp -r $PW_TMP_DIR"/home/amestienda.com.ar/backup-prod" $PW_SHARED_DIR
     echo "Backup downloaded successfully. Files are located in $PW_SHARED_DIR/backup-prod/"
+
+    # sudo mkdir -p $PW_SHARED_DIR"/backup-prod/" #2>/dev/null
+    # sudo cp -r $PW_TMP_DIR"/home/amestienda.com.ar/backup-prod" $PW_SHARED_DIR
+    # echo "Backup downloaded successfully. Files are located in $PW_SHARED_DIR/backup-prod/"
 }

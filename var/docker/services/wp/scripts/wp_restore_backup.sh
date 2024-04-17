@@ -11,7 +11,7 @@ wp plugin install "${PW_CONTAINER_SHARED_DIR}/wp/plugins/pw_wp_importer.zip"  --
 wp pw_importer restore_backup "$PW_CONTAINER_BACKUP_PROD_DIR"   --allow-root
 
 # Restpre the database
-wp db import "$PW_CONTAINER_BACKUP_PROD_DIR/amestienda.com.ar.sql"  --allow-root
+wp db import "$PW_CONTAINER_BACKUP_PROD_DIR/database.sql"  --allow-root
 wp search-replace "$PRD_HOST" "$WP_URL" --all-tables  --allow-root
 
 # Regenerate thumbnails
