@@ -58,3 +58,5 @@ docker/services/nginx/certs/
 *.log 
 notes.sh
 borrar/
+tmp/
+backup-prod/

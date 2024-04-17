@@ -71,6 +71,7 @@ services:
       - ./var/docker/volumes/wordpress:/var/www/html
       - ./var/docker/services/wp/plugins:/var/www/plugins
       - ./var/data:/var/www/data
+      - ./var/backup-prod:/var/www/backup-prod
     depends_on:
       - nginx      
     entrypoint: ['wp', '--allow-root']

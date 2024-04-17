@@ -14,7 +14,7 @@ wp_install="docker compose -f $BASEDIR/docker-compose.yml run --rm wp_install"
 COMPOSE_FILE="./docker-compose.yml"
 
 install_cert() {
-    cd $BASEDIR"/docker/services/nginx/certs"
+    cd $BASEDIR"/var/docker/services/nginx/certs"
 
     rm *.pem
     
@@ -45,13 +45,17 @@ reset_db_wp() {
     $wp_install /var/www/scripts/wp_db_reset.sh
 }
 
+build_plugin() {
+    cd $BASEDIR"/var/docker/services/wp/plugins"
+    rm pw_wp_importer.zip
+    zip -r pw_wp_importer.zip pw_wp_importer
+}
+
 # ./pw_manager.sh import-data "/var/www/data"
 import() {
     DATA_DIR="/var/www/data" #$1
     
-    cd $BASEDIR"/docker/services/wp/plugins"
-    rm pw_wp_importer.zip
-    zip -r pw_wp_importer.zip pw_wp_importer
+    build_plugin
 
     cd $BASEDIR
     #Install 
@@ -92,6 +96,34 @@ EOF
 
     echo "File unzipped to $SFTP_LOCAL_PATH"
 
+    mkdir ./var/backup-prod/ 2>/dev/null
+    mv ./var/tmp/home/amestienda.com.ar/backup-prod/*   ./var/backup-prod/  
+}
+
+
+regenerate_thumbnails() {
+    # regenerate-thumbnails/
+    cd $BASEDIR
+
+    # # Install regenerate-thumbnails plugin
+    # $wp_cmd plugin delete "regenerate-thumbnails"
+    # $wp_cmd plugin install "regenerate-thumbnails"  --activate
+
+    
+    # Install pw_wp_importer plugin
+    build_plugin
+    $wp_cmd plugin delete pw_wp_importer
+    $wp_cmd plugin install /var/www/plugins/pw_wp_importer.zip  --activate
+
+    # Restore the backup
+    $wp_cmd pw_importer restore_backup /var/www/backup-prod/ 
+    
+    
+    $wp_cmd db import ./wp-content/amestienda.com.ar.sql
+    $wp_cmd search-replace "$PRD_HOST" "$WP_URL" --all-tables
+
+    # Regenerate thumbnails
+    $wp_cmd media regenerate --only-missing --yes
 }
 
 # Check the command line argument
@@ -129,12 +161,15 @@ case $1 in
         ;;     
     download-backup-prod)
         download_backup_prod
+        ;;   
+    regenerate-thumbnails)
+        regenerate_thumbnails
         ;;     
     *)
         echo ""
         echo "###############################"
         echo "Usage:" 
-        echo " $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data|download-backup-prod}"
+        echo " $0 {up [--build]|down|install-cert|install-wp|generate-data|reset-db|import-data|download-backup-prod|regenerate-thumbnails}"
 
         echo ""
         echo "###############################"
@@ -145,6 +180,7 @@ case $1 in
         echo "  ./pw_manager.sh import-data"
         echo "" 
         echo "  ./pw_manager.sh download-backup-prod"
+        echo "  ./pw_manager.sh regenerate-thumbnails"
 
 
         echo ""

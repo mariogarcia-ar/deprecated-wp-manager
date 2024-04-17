@@ -3,7 +3,7 @@
 //TODO: ANALYZE IF THIS CLASS IS BEING USED FOR CREATE CUSTOM TAXONOMIES?
 
 class PW_WP_Importer {
-    public function __construct($file) {
+    public function __construct($file=false) {
         $this->file = $file;
     }
 
@@ -349,6 +349,35 @@ class PW_WP_Importer {
         }
     }
 
+    
+    private function copyDirectory($source, $destination) {
+        if (is_dir($source)) {
+            @mkdir($destination);
+            $files = scandir($source);
+            foreach ($files as $file) {
+                if ($file != "." && $file != "..") {
+                    $this->copyDirectory("$source/$file", "$destination/$file");
+                }
+            }
+        } else if (file_exists($source)) {
+            copy($source, $destination);
+        }
+    }
+        
+    /**
+     * Backup the uploads folder.
+     * 
+     * @param string $backup_folder The folder to backup to.
+     * 
+     */
+    public function restoreBackup($backup_folder) {
+        $upload_dir = wp_upload_dir();
+        $upload_dir = $upload_dir['basedir'];
 
+        echo "\n Restoring backup  ${backup_folder}uploads to $upload_dir";
+        $this->copyDirectory($backup_folder, $upload_dir."/../");
+        // $this->copyDirectory($backup_folder . "/uploads", $upload_dir);
+        echo "\n Backup restored";
+    }
 
 }

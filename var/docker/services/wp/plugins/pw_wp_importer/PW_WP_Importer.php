@@ -180,6 +180,25 @@ if (defined('WP_CLI') && WP_CLI) {
             $importer->importThumbnailBulk();
         }
 
+        /**
+         * Import uploads from a backup folder.
+         *
+         * ## OPTIONS
+         *
+         * <backup_folder>
+         * : The  backup_folder to import.
+         *
+         * ## EXAMPLES
+         *
+         *     wp pw_importer restore_backup /path/to/backup/folder
+         *
+         * @when after_wp_load
+         */
+        public function restore_backup($args, $assoc_args) {
+            $backup_folder = $args[0];
+            $importer = new PW_WP_Importer();
+            $importer->restoreBackup($backup_folder);
+        }
     }
 
     WP_CLI::add_command('pw_importer', 'PW_WP_Importer_Command');
