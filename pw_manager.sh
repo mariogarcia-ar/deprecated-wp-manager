@@ -16,7 +16,6 @@ case $1 in
     down)
         docker_composer_down $2
         ;;        
-
     prune)
         docker_prune $2
         ;;        
@@ -25,7 +24,6 @@ case $1 in
     emit-cert)
         lamp_emit_cert
         ;;
-
     download-backup)
         lamp_download_backup
         ;;
@@ -34,13 +32,12 @@ case $1 in
     wp-install)
         wp_install $2
         ;;
-    wp-import-data)
-        wp_import_data $2
+    wp-import-local-data)
+        wp_import_local_data $2
         ;;
     wp-site-empty)
         wp_site_empty $2
         ;;
-
     wp-restore-backup)
         wp_restore_backup $2
         ;;
@@ -63,9 +60,10 @@ case $1 in
         echo ""
         echo "Wordpress:"
         echo "  $0 wp-install"        
-        echo "  $0 wp-import-data"        
+        echo "  $0 wp-import-local-data"        
         echo "  $0 wp-restore-backup"
         echo "  $0 wp-site-empty"
+        echo ""
         echo "Visit https://${WP_URL} or admin https://${WP_URL}/wp-admin"
         echo "user: ${WP_ADMIN_USER}"
         echo "pass: ${WP_ADMIN_PASS}"        

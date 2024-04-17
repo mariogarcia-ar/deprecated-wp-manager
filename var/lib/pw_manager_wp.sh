@@ -28,7 +28,7 @@ wp_install() {
 #     $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_db_reset.sh"
 # }
 
-wp_import_data() {
+wp_import_local_data() {
     echo "Importing data ..."
     mount_scripts
     mount_data
@@ -36,7 +36,7 @@ wp_import_data() {
     cd $BASEDIR
     wp_package_plugins
 
-    $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_import_data.sh"
+    $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_import_local_data.sh"
 }
 
 wp_restore_backup() {
