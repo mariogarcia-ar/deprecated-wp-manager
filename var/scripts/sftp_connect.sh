@@ -1,19 +1,19 @@
 #!/bin/bash
+BASEDIR=$(dirname "$(realpath "$0")")
 
-# Define server details
-SFTP_HOST="149.50.139.129"
-SFTP_PORT="5518"
-SFTP_USER="prodt7011"
-SFTP_KEY="~/.ssh/id_rsa"
+source $BASEDIR"/.env" 2>/dev/null
 
-# Define the remote file to download
-REMOTE_FILE="/path/to/remote/file"
-
-# Define the local path where the file will be downloaded
-LOCAL_PATH="/path/to/local/directory"
+echo "Running sftp -i $SFTP_KEY -P $SFTP_PORT $SFTP_USER@$SFTP_HOST"
 
 # Connect to the server and download the file
 sftp -i $SFTP_KEY -P $SFTP_PORT $SFTP_USER@$SFTP_HOST <<EOF
-get $REMOTE_FILE $LOCAL_PATH
+get $SFTP_REMOTE_FILE $SFTP_LOCAL_PATH
 exit
 EOF
+
+echo "File downloaded to $SFTP_LOCAL_PATH"
+
+# unzip the file
+unzip $SFTP_LOCAL_PATH"/backup-prod.zip" -d $SFTP_LOCAL_PATH
+
+echo "File unzipped to $SFTP_LOCAL_PATH"
