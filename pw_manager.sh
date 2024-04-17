@@ -17,12 +17,26 @@ case $1 in
         docker_composer_down $2
         ;;        
 
+    prune)
+        docker_prune $2
+        ;;        
+
+    # Lamp 
+    emit-cert)
+        lamp_emit_cert
+        ;;
+
     # Help
     *)
         echo "Usage: $0 <ommand>"
         
         echo ""
         echo "Docker Stack:"
-        echo "  ./pw_manager.sh up [--build|-d]"
-        echo "  ./pw_manager.sh down [--volumen]"
+        echo "  $0 up [--build|-d]"
+        echo "  $0 down [--volumen]"
+        echo "  $0 prune"
+        
+        echo ""
+        echo "Lamp:"
+        echo "  $0 emit-cert"        
 esac
