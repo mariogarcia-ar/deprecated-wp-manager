@@ -37,6 +37,11 @@ case $1 in
     wp-import-data)
         wp_import_data $2
         ;;
+
+    wp-restore-backup)
+        wp_restore_backup $2
+        ;;
+
     # Help
     *)
         echo "Usage: $0 <ommand>"
@@ -56,4 +61,5 @@ case $1 in
         echo "Wordpress:"
         echo "  $0 wp-install"        
         echo "  $0 wp-import-data"        
+        echo "  $0 wp-restore-backup"
 esac
