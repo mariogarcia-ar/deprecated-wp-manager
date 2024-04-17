@@ -22,5 +22,4 @@ RUN apk add --no-cache libpng libjpeg-turbo freetype libgomp \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install -j$(nproc) gd \
-    && apk del .phpize-deps
+    && docker-php-ext-install -j$(nproc) gd 
