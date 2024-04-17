@@ -11,7 +11,7 @@ wp_cmd="docker compose -f $BASEDIR/docker-compose.yml run --rm wp_cmd"
 wp_install="docker compose -f $BASEDIR/docker-compose.yml run --rm wp_install"
 
 # Define the path to your docker-compose.yml file
-COMPOSE_FILE="./docker-compose.yml"
+COMPOSE_FILE="./var/docker-compose.yml"
 
 install_cert() {
     cd $BASEDIR"/docker/services/nginx/certs"

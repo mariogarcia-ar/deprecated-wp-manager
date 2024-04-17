@@ -3,7 +3,7 @@
 # chmod +x build.sh
 
 # create zip
-./docker/services/wp/plugins/pw_wp_importer/build.sh
+./var/docker/services/wp/plugins/pw_wp_importer/build.sh
 
 #Install 
 docker compose run --rm wp_cmd plugin delete pw_wp_importer
