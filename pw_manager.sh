@@ -26,6 +26,10 @@ case $1 in
         lamp_emit_cert
         ;;
 
+    # Wordpress
+    wp-install)
+        wp_install $2
+        ;;
     # Help
     *)
         echo "Usage: $0 <ommand>"
@@ -38,5 +42,9 @@ case $1 in
         
         echo ""
         echo "Lamp:"
-        echo "  $0 emit-cert"        
+        echo "  $0 emit-cert"    
+        
+        echo ""
+        echo "Wordpress:"
+        echo "  $0 wp-install"        
 esac

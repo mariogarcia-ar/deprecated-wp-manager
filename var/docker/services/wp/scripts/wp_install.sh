@@ -1,22 +1,5 @@
 #!/bin/bash
 
-# # Variables
-# WP_DB_NAME=wordpress_test
-# WP_DB_USER=wordpress_user
-# WP_DB_PASS=wordpress_password
-# WP_DB_HOST=localhost
-
-# WP_DIR=/path/to/wordpress
-
-# WP_URL=yourwebsite.com
-# WP_TITLE="Your Site Title"
-
-# WP_ADMIN_USER=admin
-# WP_ADMIN_PASS=adminpassword
-# WP_ADMIN_EMAIL=youremail@example.com
-
-# WP_VERSION=5.8.1  # Specify the WordPress version here
-
 echo "Checking if WordPress is already installed..."
 
 # Check if WordPress directory exists
@@ -60,3 +43,5 @@ wp core install --url="$WP_URL" \
 
 chown -R www-data:www-data "$WP_DIR"
 chmod -R 755 "$WP_DIR"
+
+echo "WordPress installed successfully! Visit https://$WP_URL to access your site."
