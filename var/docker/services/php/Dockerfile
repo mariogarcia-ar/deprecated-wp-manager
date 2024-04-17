@@ -15,3 +15,12 @@ RUN apk add --no-cache mysql-client
 
 RUN mkdir -p /var/www/html/wp-content/upgrade
 RUN chown www-data:www-data /var/www/html/wp-content/upgrade -R && chmod 755 /var/www/html/wp-content/upgrade -R
+
+# Install GD and Imagick extensions
+RUN apk add --no-cache libpng libjpeg-turbo freetype libgomp \
+    && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS imagemagick-dev libpng-dev libjpeg-turbo-dev freetype-dev \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-configure gd --with-jpeg --with-freetype \
+    && docker-php-ext-install -j$(nproc) gd \
+    && apk del .phpize-deps
