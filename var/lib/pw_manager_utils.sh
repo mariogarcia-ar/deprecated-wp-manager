@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sftp_download_file() {
+_sftp_download_file() {
     _SFTP_REMOTE_FILE=$1
     _SFTP_LOCAL_PATH=$2
 
@@ -10,4 +10,14 @@ sftp_download_file() {
     exit
 EOF
 
+}
+
+sftp_download_file() {
+    # _sftp_download_file $1 $2
+    if [ -f "$2" ]; then
+        echo "Backup already exists. Skipping download."
+    else
+        # Download the backup from the remote server
+        _sftp_download_file "$1" "$2"
+    fi
 }
