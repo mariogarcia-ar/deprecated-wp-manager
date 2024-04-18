@@ -70,9 +70,9 @@ case $1 in
         echo ""
         echo "Lamp:"
         echo "  $0 emit-cert (mkcert required)"    
-        echo "  $0 download-backup"    
-        echo "  $0 download-plugins                 # TODO"    
-        echo "  $0 download-themes                  # TODO"    
+        echo "  $0 download-backup                  # download db and uploads"    
+        echo "  $0 download-plugins"    
+        echo "  $0 download-themes"    
         
         echo ""
         echo "Wordpress:"

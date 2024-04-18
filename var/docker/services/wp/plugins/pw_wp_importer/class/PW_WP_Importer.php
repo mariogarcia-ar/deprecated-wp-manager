@@ -430,15 +430,9 @@ class PW_WP_Importer {
 
     public function pluginInstallLocal($plugin, $version=false) {
         $plugin_dir = getenv('PW_CONTAINER_PLUGINS_DIR') . "/${plugin}.zip";
-        if(!file_exists($plugin_dir)){
-            // WP_CLI::log("Plugin doesn't exist: $plugin_dir");
-        }else{
-            // try {
+        if(file_exists($plugin_dir)){
                 $options = array('exit_error'   => false);            
                 WP_CLI::runcommand("plugin install $plugin_dir --activate",$options );
-            // } catch (WP_CLI\ExitException $e) {
-            //     WP_CLI::log("Failed to install plugin: " . $e->getMessage());
-            // }
         }
     }
 
@@ -460,6 +454,7 @@ class PW_WP_Importer {
             $status = $row['status'];
             // if($status == "active"){
                 $this->themeInstall($theme, $version);
+                $this->themeInstallLocal($theme, $version);
             // }
         }
     }
@@ -482,4 +477,11 @@ class PW_WP_Importer {
         }
     }
 
+    public function themeInstallLocal($theme, $version=false) {
+        $theme_dir = getenv('PW_CONTAINER_THEMES_DIR') . "/${theme}.zip";
+        if(file_exists($theme_dir)){
+                $options = array('exit_error'   => false);            
+                WP_CLI::runcommand("theme install $theme_dir",$options );
+        }
+    }
 }
