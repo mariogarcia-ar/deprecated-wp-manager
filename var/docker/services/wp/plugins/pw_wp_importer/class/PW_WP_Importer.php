@@ -376,8 +376,94 @@ class PW_WP_Importer {
 
         echo "\n Restoring backup  ${backup_folder}uploads to $upload_dir";
         $this->copyDirectory($backup_folder, $upload_dir."/../");
-        // $this->copyDirectory($backup_folder . "/uploads", $upload_dir);
         echo "\n Backup restored";
+    }
+
+    /**
+     * Restore plugins from backup
+     */
+    public function restorePlugins($backup_folder) {
+        $plugins_file = $backup_folder . "/plugins.csv";
+        $this->file = $plugins_file;
+        $this->pluginInstallBulk();
+    }
+
+
+    /**
+     * 
+     */
+    public function pluginInstallBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $plugin = $row['name'];
+            $version = $row['version'];
+            $status = $row['status'];
+            if($status == "active"){
+                $this->pluginInstall($plugin, $version);
+            }
+        }
+    }
+
+    /**
+     * Install a plugin.
+     * 
+     * @param string $plugin The plugin to install.
+     * @param string $version The version of the plugin to install.
+     * @return void
+     */
+    public function pluginInstall($plugin, $version=false) {
+        try {
+            $version = $version? "--version=$version" : "";
+            $options = array(
+                // 'return'       => true,                // Return 'STDOUT'; use 'all' for full object.
+                // 'parse'        => 'json',              // Parse captured STDOUT to JSON array.
+                // 'launch'       => false,               // Reuse the current process.
+                'exit_error'   => false,                // Halt script execution on error.
+                // 'command_args' => [ '--skip-themes' ], // Additional arguments to be passed to the $command.
+              );            
+            WP_CLI::runcommand("plugin install $plugin $version --activate",$options );
+        } catch (WP_CLI\ExitException $e) {
+            WP_CLI::log("Failed to install plugin: " . $e->getMessage());
+        }
+    }
+
+    // create restoreThemes method
+    public function restoreThemes($backup_folder) {
+        $themes_file = $backup_folder . "/themes.csv";
+        $this->file = $themes_file;
+        $this->themeInstallBulk();
+    }
+
+
+    // create themeInstallBulk method using a csv file
+    public function themeInstallBulk() {
+        $data = $this->readCSV();
+        foreach ($data as $row) {
+            $theme = $row['name'];
+            $version = $row['version'];
+            $status = $row['status'];
+            // if($status == "active"){
+                $this->themeInstall($theme, $version);
+            // }
+        }
+    }
+
+
+    // create themeInstall method
+    public function themeInstall($theme, $version=false) {
+        try {
+            $version = $version? "--version=$version" : "";
+            $options = array(
+                // 'return'       => true,                // Return 'STDOUT'; use 'all' for full object.
+                // 'parse'        => 'json',              // Parse captured STDOUT to JSON array.
+                // 'launch'       => false,               // Reuse the current process.
+                'exit_error'   => false,                // Halt script execution on error.
+                // 'command_args' => [ '--skip-themes' ], // Additional arguments to be passed to the $command.
+              );            
+            WP_CLI::runcommand("theme install $theme $version",$options );
+        } catch (WP_CLI\ExitException $e) {
+            WP_CLI::log("Failed to install theme: " . $e->getMessage());
+        }
     }
 
 }

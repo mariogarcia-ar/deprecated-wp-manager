@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: CORREO ELECTORNICOS CAPTURAR
+# TODO: WOO BASE CON PLUGINS Y THEMES
+# TODO: WP CON DIVI Y PLUGINS
+
 # chmod +x pw_manager.sh
 BASEDIR=$(dirname "$(realpath "$0")")
 
@@ -41,7 +45,12 @@ case $1 in
     wp-restore-backup)
         wp_restore_backup $2
         ;;
-
+    wp-restore-plugins)
+        wp_restore_plugins $2
+        ;;
+    wp-restore-themes)
+        wp_restore_themes $2
+        ;;
     # Help
     *)
         echo "Usage: $0 <ommand>"
@@ -61,8 +70,12 @@ case $1 in
         echo "Wordpress:"
         echo "  $0 wp-install"        
         echo "  $0 wp-import-local-data"        
-        echo "  $0 wp-restore-backup"
-        echo "  $0 wp-site-empty (todo: plugin / theme)"
+        echo "  $0 wp-import-local-plugins          # TODO"        
+        echo "  $0 wp-import-local-themes           # TODO"        
+        echo "  $0 wp-restore-backup                #(depends on download-backup) restore db, uploads and attachments"
+        echo "  $0 wp-restore-plugins               #(depends on wp-restore-backup)"
+        echo "  $0 wp-restore-themes                #(depends on wp-restore-backup)"
+        echo "  $0 wp-site-empty                    #(todo: plugin / theme)"
         echo ""
         echo "Visit https://${WP_URL} or admin https://${WP_URL}/wp-admin"
         echo "user: ${WP_ADMIN_USER}"

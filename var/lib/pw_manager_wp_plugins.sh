@@ -10,7 +10,7 @@ wp_package_plugins() {
     for plugin in $(ls -d */); do
         plugin_name=$(echo $plugin | sed 's/\///')
         echo "Packaging $plugin_name ..."
-        zip -r $plugin_name".zip" $plugin_name
+        zip -q -r $plugin_name".zip" $plugin_name
     done
 
     # Move the zip files to the plugins directory

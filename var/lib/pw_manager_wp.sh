@@ -61,3 +61,25 @@ wp_site_empty() {
 
     $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_site_empty.sh"
 }
+
+wp_restore_plugins() {
+    echo "Restoring plugins ..."
+    mount_scripts
+    mount_data
+
+    cd $BASEDIR
+    wp_package_plugins
+
+    $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_restore_plugins.sh"
+}
+
+wp_restore_themes() {
+    echo "Restoring themes ..."
+    mount_scripts
+    mount_data
+
+    cd $BASEDIR
+    wp_package_plugins
+
+    $wp_install "$PW_CONTAINER_SCRIPTS_DIR/wp_restore_themes.sh"
+}
