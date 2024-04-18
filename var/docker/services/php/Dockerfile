@@ -1,4 +1,5 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.1-fpm-alpine
+# FROM php:7.4-fpm-alpine
 
 # Install dependencies
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable mysqli pdo pdo_mysql 
