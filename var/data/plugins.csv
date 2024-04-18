@@ -1,0 +1,10 @@
+name,version,status,update,update_version,auto_update,sirve?
+classic-widgets,0.3
+tco-gsheets-sync,1.0
+woo-payment-discounts,1.3.0
+classic-editor,1.6.3
+wp-mail-smtp,3.11.1,active,available
+codepress-admin-columns,4.6.1
+advanced-custom-fields,6.2.5,active,available
+woocommerce-mercadopago,7.2.0,active,available
+woocommerce,8.5.2
