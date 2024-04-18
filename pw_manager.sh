@@ -31,7 +31,13 @@ case $1 in
     download-backup)
         lamp_download_backup
         ;;
-
+    download-plugins)
+        lamp_download_plugins
+        ;;
+    download-themes)
+        lamp_download_themes
+        ;;
+                
     # Wordpress
     wp-install)
         wp_install $2
@@ -65,6 +71,8 @@ case $1 in
         echo "Lamp:"
         echo "  $0 emit-cert (mkcert required)"    
         echo "  $0 download-backup"    
+        echo "  $0 download-plugins                 # TODO"    
+        echo "  $0 download-themes                  # TODO"    
         
         echo ""
         echo "Wordpress:"

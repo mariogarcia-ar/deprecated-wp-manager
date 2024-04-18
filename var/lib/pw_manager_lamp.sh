@@ -37,3 +37,29 @@ lamp_download_backup() {
 
     echo "Backup downloaded successfully. Files are located in $PW_SHARED_DIR/backup-prod/"
 }
+
+lamp_download_plugins() {
+    echo "Downloading the plugins from the remote server ..."
+    cd "$PW_TMP_DIR"
+
+    mkdir -p $PW_TMP_DIR"/plugins/"
+    sftp_download_folder "$SFTP_REMOTE_PLUGINS_FOLDER" "$PW_TMP_DIR"
+
+    sudo mkdir -p $PW_SHARED_DIR"/plugins/"
+    sudo cp -r $PW_TMP_DIR"/plugins/"* $PW_SHARED_DIR"/plugins/"
+
+    echo "Plugins downloaded successfully. Files are located in $PW_SHARED_DIR"
+}
+
+lamp_download_themes() {
+    echo "Downloading the themes from the remote server ..."
+    cd "$PW_TMP_DIR"
+
+    mkdir -p $PW_TMP_DIR"/themes/"
+    sftp_download_folder "$SFTP_REMOTE_THEMES_FOLDER" "$PW_TMP_DIR"
+
+    sudo mkdir -p $PW_SHARED_DIR"/themes/"
+    sudo cp -r $PW_TMP_DIR"/themes/"* $PW_SHARED_DIR"/themes/"
+
+    echo "Themes downloaded successfully. Files are located in $PW_SHARED_DIR"
+}
